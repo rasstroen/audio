@@ -1,0 +1,36 @@
+.picture-list-item.image{
+    width: 120px;
+    height:120px;
+}
+.picture-list-item.title{
+    width:120px;
+    height: 20px;
+    position: absolute;
+    top:0px;
+    left:0px;
+    background: url(/static/img/cc.png);
+}
+.picture-list-item.title a{
+    color:white;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    width:120px;
+    height:20px;
+    overflow: hidden;
+    line-height: 20px;
+}
+.picture-list-item.container{
+    position: relative;
+    float:left;
+    overflow: hidden;
+    margin: 0px;
+    width: 120px;
+    height:120px;
+}
+
+.picture-list-item.image a{
+    width: 120px;
+    height:120px;
+    display: block;
+}

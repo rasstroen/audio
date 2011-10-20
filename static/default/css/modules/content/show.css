@@ -1,0 +1,29 @@
+.picture-item{
+	overflow: hidden;
+}
+.picture-item.header{
+	overflow: hidden;
+	width:332px;
+}
+
+.picture-item.id{
+	float:left;
+	width:30px;
+	overflow: hidden;
+	line-height: 20px;
+	height:20px;
+	font-size:18px;
+}
+
+.picture-item.title{
+	float:right;
+	width:300px;
+	overflow: hidden;
+	line-height: 20px;
+	height:20px;
+	font-size:18px;
+}
+
+.picture-item.image{
+	clear: both;
+}
