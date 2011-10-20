@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<structure>
+	<data>
+		<layout file="layouts/page.xsl"/>
+		<title>Добавление автора</title>
+	</data>
+	<blocks>
+		<content>
+			<module name="authors" action="new" >
+			</module>
+
+		</content>
+		<sidebar>
+		</sidebar>
+	</blocks>
+</structure>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<structure>
+	<data>
+		<layout file="layouts/page.xsl"/>
+    <title>Мои сообщения</title>
+	</data>
+	<blocks>
+		<content>
+			<module name="messages" action="list" >
+			</module>
+			<module name="messages" action="new" >
+			</module>
+
+		</content>
+		<sidebar>
+		</sidebar>
+	</blocks>
+</structure>

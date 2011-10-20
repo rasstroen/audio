@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<structure>
+	<data>
+		<layout file="layouts/page.xsl"/>
+		<stylesheet path="layout"/>
+		<stylesheet path="reset"/>
+		<stylesheet path="partials/user"/>
+	</data>
+	<blocks>
+		<header>
+			<module name="users" action="show" mode="auth"/>
+		</header>
+	</blocks>
+</structure>

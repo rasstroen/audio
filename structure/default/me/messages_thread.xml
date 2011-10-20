@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<structure>
+	<data>
+		<layout file="layouts/page.xsl"/>
+    <title>{thread-subject:get:2}</title>
+	</data>
+	<blocks>
+		<content>
+			<module name="messages" action="list" mode="thread">
+				<param name="thread_id" type="get" value="2" />
+			</module>
+			<module name="messages" action="new" >
+				<param name="thread_id" type="get" value="2" />
+			</module>
+		</content>
+		<sidebar>
+		</sidebar>
+	</blocks>
+</structure>

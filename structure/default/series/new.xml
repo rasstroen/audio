@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<structure>
+	<data>
+		<layout file="layouts/page.xsl"/>
+		<role need="40"/>
+    <title>Новая серия</title>
+	</data>
+	<blocks>
+		<content>
+			<module name="series" action="new" >
+				
+			</module>
+		</content>
+		<sidebar>
+		</sidebar>
+	</blocks>
+</structure>

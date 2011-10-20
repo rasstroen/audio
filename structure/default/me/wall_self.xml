@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<structure>
+	<data>
+		<layout file="layouts/page.xsl"/>
+    <title>Моя активность</title>
+	</data>
+	<blocks>
+		<content>
+      <module name="events" action="new"/>
+			<module name="events" action="list" >
+				<param name="user_id" type="current_user" value="" />
+				<param name="type" type="var" value="not_self" />
+				<param name="select" type="var" value="self" />
+			</module>
+		</content>
+		<sidebar>
+		</sidebar>
+	</blocks>
+</structure>

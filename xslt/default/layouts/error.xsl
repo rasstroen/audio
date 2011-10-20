@@ -7,7 +7,7 @@
 	<xsl:include href="../layout.xsl" />
 	<xsl:include href="../module.xsl"/>
 	<xsl:include href="../helpers.xsl" />
-	<xsl:template match="module[@error and @action='show']" mode="show">
+	<xsl:template match="module[@error and @action='show']">
 		<h1>
 			<xsl:text>Ошибка</xsl:text>
 			<xsl:if test="@error_code != 0 ">

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<structure>
+	<data>
+		<layout file="layouts/page.xsl"/>
+    <title>Добавить новость на стенку</title>
+	</data>
+	<blocks>
+		<content>
+			<module name="events" action="new"/>
+		</content>
+		<sidebar>
+		</sidebar>
+	</blocks>
+</structure>
