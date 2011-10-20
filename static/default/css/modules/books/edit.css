@@ -1,0 +1,15 @@
+.books-edit-genre,
+.books-edit-relation,
+.books-edit-serie,
+.books-edit-author {width:300px; border-bottom:1px solid #f0f0f0; padding:5px 0}
+.books-edit-author-role, 
+.books-edit-relation-title, 
+.books-edit-relation-type, 
+.books-edit-genre-title, 
+.books-edit-author-name {display:inline}
+.books-edit-relation-title {margin-left:.3em}
+.books-edit-author-name {margin-left:.3em}
+.books-edit-author-delete,
+.books-edit-relation-delete,
+.books-edit-serie-delete,
+.books-edit-genre-delete {float:right; font-size:80%; margin-top:2px}

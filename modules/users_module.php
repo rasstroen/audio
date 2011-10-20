@@ -7,15 +7,20 @@ class users_module extends BaseModule {
 
 	function generateData() {
 		global $current_user;
-		$params = $this->params;
-		$this->id = isset($params['user_id']) ? (int) $params['user_id'] : $current_user->id;
-		$this->genre_id = isset($params['genre_id']) ? $params['genre_id'] : false;
+
+		if (isset($this->params['user_id']) && !is_numeric($this->params['user_id'])) {
+			$query = 'SELECT `id` FROM `users` WHERE `nickname`=' . Database::escape($this->params['user_id']);
+			$this->params['user_id'] = (int) Database::sql2single($query);
+		}
+
+		$this->id = isset($this->params['user_id']) ? (int) $this->params['user_id'] : $current_user->id;
+		$this->genre_id = isset($this->params['genre_id']) ? $this->params['genre_id'] : false;
 
 		switch ($this->action) {
 			case 'edit':
 				switch ($this->mode) {
 					default:
-						$this->getProfile();
+						$this->getProfile($edit = true);
 						break;
 				}
 				break;
@@ -63,11 +68,7 @@ class users_module extends BaseModule {
 			foreach ($users as $user) {
 				if ($limit && ++$i > $limit)
 					return $out;
-				$out[] = array(
-				    'id' => $user->id,
-				    'picture' => $user->getAvatar(),
-				    'nickname' => $user->getNickName(),
-				);
+				$out[] = $user->getListData();
 			}
 		return $out;
 	}
@@ -78,14 +79,18 @@ class users_module extends BaseModule {
 			return;
 		$query = 'SELECT * FROM `genre` WHERE `name`=' . Database::escape($this->genre_id);
 		$data = Database::sql2row($query);
-		if($data['id']){
+		if ($data['id']) {
 			
 		}
 	}
 
 	function getCompareInterests() {
-		$ids = Database::sql2array('SELECT id FROM users LIMIT 10', 'id');
-		$this->data['users'] = $this->_list(array_keys($ids));
+		$ids = Database::sql2array('SELECT id FROM users LIMIT 50', 'id');
+		$this->data['users'] = $this->_list(array_keys($ids), array(), 15);
+		$this->data['users']['link_url'] = 'user/' . $this->params['user_id'] . '/compare';
+		$this->data['users']['link_title'] = 'Все единомышленники';
+		$this->data['users']['title'] = 'Люди с похожими интересами';
+		$this->data['users']['count'] = count($ids);
 	}
 
 	function getAuth() {
@@ -93,7 +98,8 @@ class users_module extends BaseModule {
 		$this->data['profile']['authorized'] = 0;
 		if ($current_user->authorized) {
 			// авторизован
-			$this->data['profile'] = $current_user->getXMLInfo();
+			$this->data['profile'] = $current_user->getListData();
+			$this->data['profile']['new_messages'] = $current_user->getNewMessagesCount();
 			$this->data['profile']['picture'] = $current_user->getAvatar();
 			$this->data['profile']['authorized'] = 1;
 		}
@@ -122,12 +128,19 @@ class users_module extends BaseModule {
 		$this->data['users']['count'] = count($followersids);
 	}
 
-	function getProfile() {
+	function getProfile($edit =false) {
 		global $current_user;
 		/* @var $current_user CurrentUser */
 		/* @var $user User */
 		$user = ($current_user->id === $this->id) ? $current_user : Users::getById($this->id);
+		if ($edit && ($user->id != $current_user->id)) {
+			Error::CheckThrowAuth(User::ROLE_SITE_ADMIN);
+		}
 
+		if ($edit) {
+			foreach (Users::$rolenames as $id => $role)
+				$this->data['roles'][] = array('id' => $id, 'title' => $role);
+		}
 
 		$this->data['profile'] = $user->getXMLInfo();
 
@@ -135,10 +148,12 @@ class users_module extends BaseModule {
 		$this->data['profile']['role'] = $user->getRole();
 		$this->data['profile']['lang'] = $user->getLanguage();
 		$this->data['profile']['city_id'] = $user->getProperty('city_id');
-		$this->data['profile']['city'] = Database::sql2single('SELECT `name` FROM `lib_city` WHERE `id`=' . $user->getProperty('city_id'));
+		$this->data['profile']['city'] = Database::sql2single('SELECT `name` FROM `lib_city` WHERE `id`=' . (int) $user->getProperty('city_id'));
 		$this->data['profile']['picture'] = $user->getAvatar();
 		$this->data['profile']['rolename'] = $user->getRoleName();
 		$this->data['profile']['bday'] = $user->getBday(date('d-m-Y'), 'd-m-Y');
+		$this->data['profile']['path'] = $user->getUrl();
+		$this->data['profile']['path_edit'] = $user->getUrl() . '/edit';
 
 		$this->data['profile']['bdays'] = $user->getBday('неизвестно', 'd.m.Y');
 		// additional
@@ -149,6 +164,8 @@ class users_module extends BaseModule {
 
 		$this->data['profile']['quote'] = $user->getPropertySerialized('quote');
 		$this->data['profile']['about'] = $user->getPropertySerialized('about');
+//		$this->data['profile']['path_message'] = Config::need('www_path').'/me/messages?to='.$user->id;
+		$this->data['profile']['path_message'] = Config::need('www_path') . '/user/' . $user->getNickName() . '/contact';
 	}
 
 	/**

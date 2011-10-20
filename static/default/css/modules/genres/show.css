@@ -1,0 +1,9 @@
+.genres-show-info-loved {margin-bottom:1em}
+.genres-show-info-loved p {display:inline; margin-right:.3em}
+
+.genres-show-books-list {margin-top:1em}
+.genres-show-books-list-item {width:116px; padding:4px; float:left}
+.genres-show-books-list-item-image img {max-height:50px}
+.genres-show-books-list-item-info-title,
+.genres-show-books-list-item-info-author {height:2.5em; overflow:hidden}
+.genres-show-books-list-item-info-author a {color:black; font-size:80%}

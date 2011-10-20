@@ -1,0 +1,14 @@
+.reviews-list-item {overflow:hidden; margin-bottom:1em}
+.reviews-list-item-image {float:left; margin-right:1em; width:70px}
+.reviews-list-item-image img {max-width:70px}
+
+.reviews-list-item-user {overflow:hidden; margin-bottom:1em}
+.reviews-list-item-user-book-image {float:left; margin-right:10px; width:70px}
+.reviews-list-item-user-book-image img {max-height:70px}
+.reviews-list-item-user-text {clear:both; margin-left:80px; margin-top:.5em}
+
+.reviews-list-item-rate {overflow:hidden}
+.reviews-list-item-rate-image {float:left; margin-right:10px}
+.reviews-list-item-rate-image img {max-width:25px; max-height:25px}
+.reviews-list-item-rate-text-time {float:right; margin-left:10px; font-size:85%; line-height:25px}
+.reviews-list-item-rate-text-title {line-height:25px}

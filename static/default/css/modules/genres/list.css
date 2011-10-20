@@ -1,0 +1,8 @@
+.genres-list-item h2 {margin-bottom:.1em}
+.genres-list-item-count {font-size:90%; color:#777}
+.genres-list-item-subgenres {margin:.5em 0 1em; overflow:hidden}
+.genres-list-item-subgenres-item {float:left; line-height:2em; margin-right:1em}
+.genres-list-item-subgenres-item a {color:black}
+.genres-list-item-subgenres-item em {color:#777; font-size:80%}
+
+.genres-list-loved-item {margin-bottom:.3em}

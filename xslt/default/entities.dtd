@@ -2,10 +2,14 @@
 
 <!--=================== XML Elements =====================================-->
 <!ENTITY root "/root">
+<!ENTITY structure "/root/structure">
 <!ENTITY page "&root;/page">
 <!ENTITY prefix "&page;/@prefix">
 <!ENTITY modules "&root;/module">
 <!ENTITY current_profile "&page;/current_user">
+<!ENTITY current_user "&page;/current_user">
+<!ENTITY role "&page;/current_user/@role">
+<!ENTITY include_path "&page;/@prefix">
 
 <!--=================== Text Elements ====================================-->
 <!ENTITY special.pre "br | span | bdo | map">

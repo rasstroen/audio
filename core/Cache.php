@@ -41,9 +41,15 @@ class Cache {
 		self::$cache_folder = Config::need('cache_default_folder', '');
 		self::$inited = true;
 		global $current_user;
+
 		/* @var $current_user CurrentUser */
-		self::$language = $current_user->getLanguage();
-		self::$theme = $current_user->getTheme();
+		if ($current_user == null) {
+			self::$language = Config::need('default_language');
+			self::$theme = Config::need('default_theme');
+		} else {
+			self::$language = $current_user->getLanguage();
+			self::$theme = $current_user->getTheme();
+		}
 		return true;
 	}
 
@@ -128,12 +134,12 @@ class Cache {
 
 	private static function drop_xcache($name, $datatype = self::DATA_TYPE_XML) {
 		if ($datatype == self::DATA_TYPE_XSL)
-			$filename = 'xsl' . self::$theme . '_' . self::$language . '_' . $name . '.xsl';
+			$filename = 'xsl_' . self::$theme . '_' . self::$language . '_' . $name . '.xsl';
 		else if ($datatype == self::DATA_TYPE_XML)
-			$filename = 'xml' . self::$theme . '_' . self::$language . '_' . $name;
+			$filename = 'xml_' . self::$theme . '_' . self::$language . '_' . $name;
 		else
-			$filename = 'var' . $name;
-		xcache_unset($filename);
+			$filename = 'var_' . $name;
+		@xcache_unset($filename);
 		Log::logHtml($filename . ' deleted from xcache');
 	}
 
@@ -166,8 +172,9 @@ class Cache {
 			$filename = 'xml_' . self::$theme . '_' . self::$language . '_' . $name;
 		else
 			$filename = 'var_' . $name;
-		Log::logHtml($filename . ' got from xcache');
-		return xcache_get($filename);
+		$var = xcache_get($filename);
+		Log::logHtml($filename . ' got from xcache:' . $var);
+		return $var;
 	}
 
 	private static function get_memcache($name) {
@@ -181,6 +188,7 @@ class Cache {
 			$filename = 'xml_' . self::$theme . '_' . self::$language . '_' . $name;
 		else
 			$filename = 'var_' . $name;
+		Log::logHtml($filename . ' put into xcache');
 		xcache_set($filename, $value, $cache_seconds);
 	}
 

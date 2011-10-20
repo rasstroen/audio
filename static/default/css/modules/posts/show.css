@@ -1,0 +1,17 @@
+.comments-list-item-image,
+.posts-show-image {float:left; width:80px; margin-right:10px}
+.posts-show-image img {max-width:70px; max-height:70px}
+.comments-list-item-text,
+.posts-show-text {overflow:hidden}
+.answers-list-item abbr,
+.comments-list-item-text-time,
+.posts-show-text-time {float:right; font-size:85%; color:#777}
+.posts-show-text-body {margin-top:.5em}
+.posts-show-text-comments-list {border-top:1px solid #d0d0d0; margin-top:1em; padding-top:1em}
+
+.comments-list-item {overflow:hidden; margin-top:.3em}
+.comments-list-item-image img {max-width:50px; max-height:50px}
+
+.answers-list-item {background:#f0f0f0; margin-top:.3em; padding:3px 5px}
+.answers-list-item img {max-width:20px; max-height:20px; margin-right:5px}
+.answers-list-item-body {display:inline}

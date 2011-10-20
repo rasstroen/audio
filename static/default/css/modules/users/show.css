@@ -1,0 +1,8 @@
+.users-show-image {float:left; margin-right:20px}
+.users-show-text {overflow:hidden}
+.users-show-text b {margin-left:.3em}
+.users-show-text p {margin-bottom:.3em}
+
+.users-show-auth-image {float:left; margin-right:5px}
+.users-show-auth-image img {max-width:15px; max-height:15px}
+.users-show-auth input {display:block; margin-bottom:.2em}

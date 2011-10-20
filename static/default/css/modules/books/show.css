@@ -1,0 +1,8 @@
+.books-show-image {float:left; margin-left:10px; width:200px}
+.books-show-info {overflow:hidden}
+.books-show-info-files,
+.books-show-info-series,
+.books-show-info-genres {margin:.5em 0}
+.books-show-info-shelf,
+.books-show-info-loved {margin-bottom:1em}
+.books-show-info-loved p {display:inline; margin-right:.3em}

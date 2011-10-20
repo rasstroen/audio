@@ -1,0 +1,4 @@
+.forum-show-comments-item {margin-bottom:1em; overflow:hidden}
+.forum-show-comments-item-image {float:left; margin-right:10px; width:50px}
+.forum-show-comments-item-image img {max-width:50px}
+.forum-show-comments-item-text {overflow:hidden}

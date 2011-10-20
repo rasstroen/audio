@@ -1,16 +1,15 @@
 /* Layout */
 .l-wrapper, .l-header, .l-footer {width:960px; margin:2em auto 4em; clear:both; overflow:hidden}
-.l-header-auth {float:right; padding:5px; margin-bottom:5px}
-.l-header-auth img {height:10px}
+.l-header-module {float:right; padding:5px; margin-bottom:5px}
 .l-header-logo {float:left; overflow:hidden; margin-right:15px; margin-bottom:10px}
 .l-header-search {float:left}
 .l-header-nav {float:left; overflow:hidden}
 .l-header-nav ul {float:left; list-style:none}
 .l-header-nav ul li {float:left; list-style:none; margin-right:5px}
 
-.l-content {float:right; width:860px; padding-right:20px}
+.l-content {float:left; width:620px; padding-right:20px}
 .l-content .module {overflow:hidden; margin-bottom:2em}
-.l-sidebar {float:left; width:60px; padding:10px}
+.l-sidebar {float:right; width:300px; padding:10px}
 
 .l-footer-nav ul li {float:left; list-style:none; margin-right:5px}
 
@@ -18,17 +17,21 @@
 a {color:#06a}
 .l-sidebar {background:#f0f0f0}
 .l-header-nav ul p a {color:black}
-.l-header-auth {background:#f0f0f0}
+.l-header-module {background:#f0f0f0}
 
 /* Fonts */
 .l-body {font:80% Arial,Verdana,Tahoma,sans-serif}
-.l-body h1 {font-size:200%}
+.l-body h1 {font-size:200%; margin-bottom:.5em}
 .l-body h2 {font-size:150%; margin-bottom:.5em}
 .l-body h3 {font-size:120%; margin-bottom:.3em}
 .l-header-nav ul p {font-size:150%}
 .l-footer-nav ul li {font-size:85%}
 
 /* Misc */
+.l-header-logo a {
+  background: url('/static/default/img/logo.png') no-repeat scroll 0 0 transparent;
+  float:left; height:58px; overflow:hidden; text-indent:9999px; width:340px;
+}
 .l-content .module form {margin-bottom:1em}
 .l-content .module .form-group {margin-bottom:1em}
 .l-content .module .form-field {margin-bottom:.5em; overflow:hidden}
@@ -43,3 +46,17 @@ a {color:#06a}
 .l-content .module .form-error {background-color: #FFDBDB; border-color: #F26666}
 .l-content .module .form-notice {background-color: #C5FCA3; border-color: #62CF21}
 .l-content .module .form-error-exp {color:red; font-size:80%}
+
+.l-sidebar-add-item {margin-bottom:.5em}
+
+.conditions-item-title,
+.conditions-item-options-item {display:inline; margin-right:.3em}
+.conditions-item-options-item {padding:3px 0 2px}
+.conditions-item-options-item a {padding:3px 8px 2px}
+.conditions-item .current a {font-weight:bold; color:#000; text-decoration:none; background:#eee}
+
+.hidden {display:none}
+
+/* Debug */
+.l-debug {float:right}
+.l-debug a {color:red}

@@ -1,0 +1,9 @@
+.messages-list-item {margin-bottom:.7em; overflow:hidden; padding:.3em}
+.messages-list-item.new {background:#d7F4FF}
+.messages-list-item-image {float:left; margin-right:10px}
+.messages-list-item-image img {max-width:50px; max-height:50px}
+.messages-list-item-text {overflow:hidden}
+.messages-list-item-text-time {float:right; font-size:85%; color:#777; margin-left:.5em}
+.messages-list-item-text-delete {font-size:85%; color:#777; float:right}
+.messages-list-item-text-user {float:left; margin-right:.5em}
+.messages-list-item-text-subject {font-weight:bold}

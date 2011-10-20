@@ -1,0 +1,6 @@
+.magazines-show-info p {margin-bottom:.5em}
+.magazines-show-info,
+.magazines-show-years {margin-top:1em}
+.magazines-show-years-item {margin-top:.5em; overflow:hidden}
+.magazines-show-years-item h3 {float:left; margin-right:1em}
+.magazines-show-years-item-books-item-empty {color:#a06060}

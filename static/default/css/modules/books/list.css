@@ -1,0 +1,14 @@
+.books-list {margin:1em 0; clear:both}
+.books-list-item {float:left; width:119px; padding:0 5px 1.5em 0}
+.books-list-item-del {float:right; margin:0 10px}
+.books-list-item-image img {height:50px}
+.books-list-item-info-title {height:2.45em; overflow:hidden}
+.books-list-item-info-author {height:1.22em; overflow:hidden}
+.books-list-item-info-author a {color:black; font-size:85%}
+.books-list-link {clear:both}
+
+.books-list-shelves {margin-bottom:2em}
+.books-list-shelves-item {overflow:hidden}
+.books-list-shelves-item-image {float:left; margin-right:10px}
+.books-list-shelves-item-image img {height:100px}
+.books-list-shelves-item-info {overflow:hidden}

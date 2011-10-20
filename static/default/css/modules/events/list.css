@@ -1,0 +1,29 @@
+.events-list-item {margin:1em 0; overflow:hidden}
+.events-list-item-image {float:left; margin-right:1em}
+.events-list-item-image img {max-width:60px}
+.events-list-item-text {overflow:hidden}
+.events-list-item-text-date {float:right; color:#777}
+.events-list-item-text-review {margin-top:.3em}
+.events-list-item-text-title {display:inline}
+
+.events-list-item-likes {float:right; margin-bottom:.5em; clear:right}
+.events-list-item-likes div {display:inline; margin-right:.5em}
+
+.events-list-item-book {background:#f0f0f0; padding:4px; overflow:hidden; margin:.5em 0}
+.events-list-item-book-image {float:left; margin-right:1em}
+.events-list-item-book-image img {max-height:50px}
+.events-list-item-book-author a {color:black; font-size:85%}
+
+.events-list-item-author {background:#f0f0f0; padding:4px; overflow:hidden; margin:.5em 0}
+.events-list-item-author-image {float:left; margin-right:1em}
+.events-list-item-author-image img {max-height:50px}
+
+.events-list-item-comments-new,
+.events-list-item-comments {border-top:1px solid #d0d0d0; margin-top:1em; padding-top:1em; clear:both; overflow:hidden}
+.events-list-item-comments-item {margin-top:.5em; overflow:hidden}
+.events-list-item-comments-item-text-time {float:right; font-size:85%; color:#777}
+.events-list-item-comments-item-image {float:left; width:20px; margin-right:10px}
+.events-list-item-comments-item-image img {max-height:20px}
+.events-list-item-comments-add {clear:left}
+
+.events-list-item-comments-item-answers {padding-left:30px}

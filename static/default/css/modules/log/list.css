@@ -1,0 +1,19 @@
+.log-list {padding-left:20px; clear:both}
+.log-list-form-controls {float:right; margin-bottom:1em}
+
+.log-list-item {margin-bottom:1.5em}
+.log-list-item-checkbox {float:left; margin-top:2px; margin-right:6px; margin-left:-20px}
+.log-list-item-image {float:left; margin-right:5px}
+.log-list-item-image img {max-width:20px}
+.log-list-item-text {line-height:20px}
+.log-list-item-text-date {float:right; font-size:85%; color:#777; line-height:20px}
+.log-list-item-text-controls {float:right; font-size:85%; margin-left:.5em}
+.log-list-item-text-controls a:hover {color:red}
+.log-list-item-values {clear:both; background:#f0f0f0; padding:5px}
+.log-list-item-values table {width:100%; margin-top:.3em}
+.log-list-item-values th {font-weight:bold; width:45%; padding-bottom:2px}
+.log-list-item-values th.first {width:10%}
+.log-list-item-values-item td {padding:3px 5px; border-top:1px solid #ccc; vertical-align:top}
+.log-list-item-values-item-name {font-weight:bold}
+
+.log-list .cancelled * {color:#bbb}

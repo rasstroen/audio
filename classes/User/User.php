@@ -3,10 +3,12 @@
 // класс, отвечающий за юзера
 class User {
 	const ROLE_ANON = 0; // аноним
-	const ROLE_READER_UNCONFIRMED = 1; // юзер с неподтвержденным мылом
-	const ROLE_READER_CONFIRMED = 2; // юзер с подтвержденным мылом
+	const ROLE_READER_UNCONFIRMED = 10; // юзер с неподтвержденным мылом
+	const ROLE_VANDAL = 20; // вандал
+	const ROLE_READER_CONFIRMED = 30; // юзер с подтвержденным мылом
 
-	const ROLE_SITE_ADMIN = 20; // юзер с подтвержденным мылом
+	const ROLE_BIBER = 40; // бибер
+	const ROLE_SITE_ADMIN = 50; // админ вся руси
 
 	public $id = 0;
 	// users
@@ -14,7 +16,7 @@ class User {
 	public $profile = array();
 	public $shelfLoaded = false;
 	public $shelf;
-	public $loaded;
+	public $loaded = false;
 	//users_additional
 	public $profileAdditional = array(); // mongodb stored
 	public $changedAdditional = array(); // mongodb stored
@@ -27,6 +29,61 @@ class User {
 	    'lastSave',
 	    'lastLogin',
 	);
+	public $lovedLoaded = false;
+	public $loved;
+	
+	function __construct($id = false, $data = false) {
+		$this->loaded = false;
+		if ($id && !is_numeric($id)) {
+			$query = 'SELECT `id` FROM `users` WHERE `nickname`=' . Database::escape($id);
+			$id = (int) Database::sql2single($query);
+		}
+		if ($id) {
+			$this->id = max(0, $id);
+		}
+		if ($data)
+			$this->load($data);
+	}
+
+	function checkRights($right_name) {
+		switch ($right_name) {
+			// todo for check rights
+		}
+	}
+
+	function loadLoved() {
+		if ($this->lovedLoaded)
+			return true;
+		$this->loved = array();
+		$this->lovedLoaded = true;
+		$query = 'SELECT * FROM `users_loved` WHERE `id_user`=' . $this->id;
+		$res = Database::sql2array($query);
+		foreach ($res as $row) {
+			$this->loved[$row['target_type']][$row['id_target']] = $row['id_target'];
+		}
+	}
+
+	function getLoved($type) {
+		if (!$this->lovedLoaded) {
+			$this->loadLoved();
+		}
+		return isset($this->loved[(int) $type]) ? $this->loved[(int) $type] : array();
+	}
+
+	function getListData() {
+		return array(
+		    'id' => $this->id,
+		    'picture' => $this->getAvatar(),
+		    'nickname' => $this->getNickName(),
+		    'lastSave' => $this->profile['lastSave'],
+		    'path' => $this->getUrl(),
+		    'role' => $this->getRole(),
+		);
+	}
+
+	function getUrl() {
+		return Config::need('www_path') . '/user/' . $this->id;
+	}
 
 	function checkInBookshelf($_id_book) {
 		$shelf = $this->getBookShelf();
@@ -57,7 +114,8 @@ class User {
 		$id_book = max(0, (int) $id_book);
 		$id_shelf = max(0, (int) $id_shelf);
 		$time = time();
-		$query = 'INSERT IGNORE INTO `users_bookshelf` SET `id_user`=' . $this->id . ',`id_book`=' . $id_book . ', `bookshelf_type`=' . $id_shelf . ', `add_time`=' . $time;
+		$query = 'INSERT INTO `users_bookshelf` SET `id_user`=' . $this->id . ',`id_book`=' . $id_book . ', `bookshelf_type`=' . $id_shelf . ', `add_time`=' . $time . '
+			ON DUPLICATE KEY UPDATE `id_book`=' . $id_book . ', `bookshelf_type`=' . $id_shelf . ', `add_time`=' . $time . '';
 		Database::query($query);
 		$this->shelf[$id_shelf][$id_book] = array(
 		    'id_user' => $this->id,
@@ -65,6 +123,9 @@ class User {
 		    'bookshelf_type' => $id_shelf,
 		    'add_time' => $time
 		);
+		$event = new Event();
+		$event->event_addShelf($this->id, $id_book, $id_shelf);
+		$event->push();
 	}
 
 	// кто меня читает
@@ -101,15 +162,6 @@ class User {
 		
 	}
 
-	function __construct($id = false, $data = false) {
-		$this->loaded = false;
-		if ($id) {
-			$this->id = max(0, $id);
-		}
-		if ($data)
-			$this->load($data);
-	}
-
 	public function getTheme() {
 		return Config::need('default_theme');
 	}
@@ -135,6 +187,7 @@ class User {
 			`email`=\'' . $email . '\',
 			`password`=\'' . md5($password) . '\',
 			`nickname`=\'' . $nickname . '\',
+			`role`=\'' . User::ROLE_READER_CONFIRMED . '\',
 			`hash` = \'' . $hash . '\'';
 		if (Database::query($query)) {
 			$this->id = Database::lastInsertId();
@@ -154,7 +207,8 @@ class User {
 	// отдаем информацию по пользователю для отображения в xml
 	public function getXMLInfo() {
 		$this->load();
-		return $this->profile_xml;
+		$out = $this->profile_xml;
+		return $out;
 	}
 
 	// грузим дополнительню информацию
@@ -170,17 +224,26 @@ class User {
 	public function load($rowData = false) {
 		if ($this->loaded)
 			return true;
-		$this->loaded = true;
 		if (!$rowData) {
 			if (!$this->id) {
 				$this->setXMLAttibute('auth', 0);
 			} else {
-				$rowData = Database::sql2row('SELECT * FROM `users` WHERE `id`=' . $this->id);
+				if ($cachedUser = Users::getFromCache($this->id)) {
+					$this->profile = $cachedUser->profile;
+					foreach ($this->profile as $field => $value) {
+						$this->setXMLAttibute($field, $value);
+					}
+					$this->profileAdditional = $cachedUser->profileAdditional;
+					$this->loaded = true;
+					return;
+				} else {
+					$rowData = Database::sql2row('SELECT * FROM `users` WHERE `id`=' . $this->id);
+				}
 			}
 		}
 		if (!$rowData) {
 			// нет юзера в базе
-			throw new Exception('No user #' . $this->id . ' in database', Error::E_USER_NOT_FOUND);
+			throw new Exception('Такого пользователя не существует', Error::E_USER_NOT_FOUND);
 		}
 
 		$this->id = (int) $rowData['id'];
@@ -199,6 +262,9 @@ class User {
 			// данные для xml - в xml
 			$this->setXMLAttibute($field, $value);
 		}
+		Users::add($this);
+		$this->loaded = true;
+		Users::putInCache($this->id);
 		return;
 	}
 
@@ -220,13 +286,13 @@ class User {
 	}
 
 	public function getBday($default = 0, $format = 'Y-m-d') {
-		return date($format, $this->getProperty('bday', $default));
+		return date($format, (int) $this->getProperty('bday', $default));
 	}
 
 	public function getRoleName($id = false) {
 		if (!$id)
 			$id = $this->getRole();
-		return Users::$rolenames[$id];
+		return isset(Users::$rolenames[$id]) ? Users::$rolenames[$id] : User::ROLE_READER_UNCONFIRMED;
 	}
 
 	public function setPropertySerialized($field, $value, $save = true) {

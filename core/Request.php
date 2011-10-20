@@ -14,17 +14,28 @@ class Request {
 
 	private static $initialized = false;
 	public static $get = array();
+	public static $get_normal = array();
 	public static $post = array();
-	public static $pageName = 'p404';
+	public static $structureFile = 'errors/p404.xml';
 	public static $url = '';
 	public static $responseType = 'html';
+	private static $pass;
+	private static $real_path = -2;
+	public static $path_history = '';
+
+	public static function pass($f, $v = false) {
+		if ($v === false)
+			return isset(self::$pass[$f]) ? self::$pass[$f] : false;
+		self::$pass[$f] = $v;
+	}
 
 	/** обрабатываем входные параметры скрипта, определяем запрашиваемую страницу
 	 *
 	 */
-	public static function initialize() {
-		if (self::$initialized)
+	public static function initialize($deep = false) {
+		if (!$deep && self::$initialized)
 			return;
+		self::$path_history = '';
 		self::$initialized = true;
 		// принимаем uri
 		$e = explode('?', $_SERVER['REQUEST_URI']);
@@ -33,29 +44,41 @@ class Request {
 			parse_str($e[1], $d);
 		else
 			$d = array();
+
 		$prepared_get = array();
-		foreach ($d as $name => $val) {
-			echo $val . "\n";
-			$prepared_get[urldecode($name)] = urldecode($val);
-			if (urldecode($val) != $val)
-				die($val . 's');
-			$val = iconv('CP1251', 'UTF-8', $val);
+		foreach ($d as $name => &$val) {
+			$val = to_utf8($val);
+			$prepared_get[$name] = stripslashes($val);
 		}
-		self::$get = $prepared_get;
+		self::$get_normal = self::$get = $prepared_get;
 		$path_array = explode('/', self::processRuri($_SERVER['REQUEST_URI']));
 		// убиваем начальный слеш
 		array_shift($path_array);
 		// определяем, что из этого uri является страницей
-		self::$pageName = self::getPage($path_array);
-		//die(self::$pageName);
+		self::$structureFile = self::getPage($path_array, $deep);
+		if (self::$real_path >= 0) {
+			self::$structureFile = 'errors/p404.xml';
+		}
+		//die(self::$structureFile);
 		// разбираем параметры
 		self::parse_parameters($path_array);
-
-		foreach ($_POST as $f => $v) {
-			self::$post[$f] = $v;
-		}
+		if (isset($_POST))
+			foreach ($_POST as $f => $v) {
+                        if(!is_array($v))
+				self::$post[$f] = stripslashes($v);
+			else
+                                self::$post[$f] = $v;
+                        }
 		unset($_POST);
 		unset($_GET);
+	}
+
+	function getRealPath() {
+		$uri = explode('/', $_SERVER['REQUEST_URI']);
+		$i = self::$real_path;
+		while ($i-- > 1)
+			array_pop($uri);
+		return implode('/', $uri);
 	}
 
 	/** по маске проверяем параметры для модуля
@@ -255,7 +278,7 @@ class Request {
 	 *
 	 */
 
-	private static function getPage(array $path) {
+	private static function getPage(array $path, $deep = false) {
 
 		$parts = array();
 		foreach ($path as $path_part) {
@@ -270,40 +293,65 @@ class Request {
 			}
 		}
 		$path_mapped = implode('/', $parts);
+		if (!$deep) {
+			$end = count($parts) - 2;
+		}else
+			$end = -1;
 
+		$path_mapped = $path_mapped ? $path_mapped : '/';
 
-		if (!isset(LibMap::$map[$path_mapped])) {
+		if (!isset(Map::$map[$path_mapped])) {
 			$path_mapped_reduce = $parts;
-			for ($i = count($parts); $i > -1; $i--) {
+			for ($i = count($parts); $i > $end; $i--) {
+				self::$real_path++;
+				// path with %s/some
+				$pt = $path_mapped_reduce;
+				if (isset($pt[count($pt) - 2])) {
+					$pt[count($pt) - 2] = '%s';
+					$reduced_uri = implode('/', $pt);
+					if ($structureFile = self::getPageByPath($reduced_uri, $path_mapped)) {
+						self::$real_path--;
+						return $structureFile;
+					}
+				}
 				unset($path_mapped_reduce[$i]);
-
 				// path with *
 				$reduced_uri = implode('/', $path_mapped_reduce) . '/*';
-				if ($pageName = self::getPageByPath($reduced_uri))
-					return $pageName;
+				if ($structureFile = self::getPageByPath($reduced_uri, $path_mapped)) {
+					self::$real_path--;
+					return $structureFile;
+				}
 				// path with %s
 				$reduced_uri = implode('/', $path_mapped_reduce) . '/%s';
-				if ($pageName = self::getPageByPath($reduced_uri))
-					return $pageName;
+				if ($structureFile = self::getPageByPath($reduced_uri, $path_mapped)) {
+					self::$real_path--;
+					return $structureFile;
+				}
 				// path
 				$reduced_uri = implode('/', $path_mapped_reduce);
-				if ($pageName = self::getPageByPath($reduced_uri))
-					return $pageName;
+				if ($structureFile = self::getPageByPath($reduced_uri, $path_mapped)) {
+					return $structureFile;
+				}
 			}
 		} else {
-			return LibMap::$map[$path_mapped];
+			return Map::$map[$path_mapped];
 		}
-		return 'p404';
+		return 'errors/p404.xml';
 	}
 
-	private static function getPageByPath($path) {
+	private static function getPageByPath($path, $path_mapped) {
 		$path = $path ? $path : '/';
-		echo $path . '<br/>';
-		if (isset(LibMap::$sinonim[$path])) {
-			return LibMap::$map[LibMap::$sinonim[$path]];
+		self::$path_history.=$path . '<br/>';
+		if ($path == '/') {
+			if (count($path_mapped) > 0) {
+				return 'errors/p404.xml';
+			}
 		}
-		if (isset(LibMap::$map[$path])) {
-			return LibMap::$map[$path];
+		if (isset(Map::$sinonim[$path])) {
+			return Map::$map[Map::$sinonim[$path]];
+		}
+		if (isset(Map::$map[$path])) {
+			return Map::$map[$path];
 		}
 		return false;
 	}

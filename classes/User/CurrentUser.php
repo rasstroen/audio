@@ -3,6 +3,7 @@
 // класс, отвечающий за текущего юзера
 class CurrentUser extends User {
 
+	public $new_messages_cachetime = 60;
 	public $xml_fields = array(// в отличие от всех юзеров для текущего мы можем выдавать больше данных
 	    'id',
 	    'email',
@@ -22,6 +23,25 @@ class CurrentUser extends User {
 		return isset($this->profile[$field]) ? $this->profile[$field] : $default;
 	}
 
+	public function getXMLInfo() {
+		$this->load();
+		$out = $this->profile_xml;
+		$out['new_messages'] = $this->getNewMessagesCount();
+		return $out;
+	}
+
+	public function getNewMessagesCount() {
+		$cacheName = 'messages_count_' . $this->id;
+		if (!isset($this->new_messages_count)) {
+			if (($this->new_messages_count = Cache::get($cacheName)) === false) {
+				$query = 'SELECT COUNT(1) FROM `users_messages_index` WHERE `id_recipient`=' . $this->id . ' AND `is_new`=1';
+				$this->new_messages_count = Database::sql2single($query);
+				Cache::set($cacheName, (int) $this->new_messages_count, $this->new_messages_cachetime);
+			}
+		}
+		return (int) $this->new_messages_count;
+	}
+
 	public function logout() {
 		$this->authorized = false;
 		$this->id = 0;
@@ -39,6 +59,7 @@ class CurrentUser extends User {
 			`session`=\'' . $hash . '\',
 			`expires`=' . (time() + Config::need('auth_cookie_lifetime'));
 		Database::query($query);
+		Cache::drop('auth_' . $this->id);
 		$this->setProperty('lastLogin', time());
 		$this->setAuthCookie($hash);
 	}
@@ -67,14 +88,23 @@ class CurrentUser extends User {
 	public function authorize_cookie() {
 		$auth_cookie_name = Config::need('auth_cookie_hash_name');
 		$auth_uid_name = Config::need('auth_cookie_id_name');
+		$xcache_cookie = 'auth_' . (int) $_COOKIE[$auth_uid_name];
+		$to_cache = true;
 		if (isset($_COOKIE[$auth_cookie_name]) && isset($_COOKIE[$auth_uid_name])) {
-			$query = 'SELECT `session`,`expires` FROM `users_session` WHERE `user_id`=' . (int) $_COOKIE[$auth_uid_name];
-			$row = Database::sql2row($query);
+			if ($row = Cache::get($xcache_cookie)) {
+				$row = unserialize($row);
+				$to_cache = false;
+			} else {
+				$query = 'SELECT `session`,`expires` FROM `users_session` WHERE `user_id`=' . (int) $_COOKIE[$auth_uid_name];
+				$row = Database::sql2row($query);
+			}
 			if ($row) {
 				if ($row['session'] == $_COOKIE[$auth_cookie_name] && $row['expires'] > time()) {
 					$this->id = (int) $_COOKIE[$auth_uid_name];
 					$this->load();
 					$this->authorized = true;
+					if ($to_cache)
+						Cache::set($xcache_cookie, serialize($row), Config::need('auth_cookie_lifetime'));
 				}
 			}
 		}else

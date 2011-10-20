@@ -5,14 +5,13 @@ class XMLClass {
 	public static $xml; // собственно весь xml
 	public static $rootNode; // рутовая нода
 	public static $pageNode; // нода страницы
+	public static $varNode; // нода страницы
 	public static $CurrentUserNode; // нода текущего юзера
 	private static $initialized = false;
 
 	private static function initialize() {
 		if (self::$initialized)
 			return self::$rootNode;
-		//$implementation = new DOMImplementation();
-		//$xmlDocument = $implementation->createDocument();
 		$xmlDocument = new DOMDocument();
 		$xmlDocument->encoding = 'UTF-8';
 		$xmlDocument->appendChild($xmlDocument->createElement('root'));
@@ -34,6 +33,8 @@ class XMLClass {
 	// добавляем в корень xml дерева ноду 
 	public static function appendNode($xmlNode, $nodeName = false) {
 		self::initialize();
+		if(!($xmlNode instanceof DOMNode))
+                    return;
 		if ($nodeName)
 			$xmlNode->setAttribute('name', $nodeName);
 		self::$rootNode->appendChild($xmlNode);
@@ -42,6 +43,8 @@ class XMLClass {
 
 	// выставляем свойства ноде
 	public static function setNodeProps($xmlNode, array $properties) {
+            if(!($xmlNode instanceof DOMNode))
+                    return;
 		foreach ($properties as $f => $v)
 			if (is_string($v))
 				$xmlNode->setAttribute($f, $v);
