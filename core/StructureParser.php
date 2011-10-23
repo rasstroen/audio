@@ -13,47 +13,48 @@ class StructureParser {
 	public static function XMLToArray($path_to_structure, $path_to_default) {
 		self::parse($path_to_default);
 		self::parse($path_to_structure);
-		if(!self::getLayoutPath())
-			throw new Exception('missed layout header in structure file '.$path_to_structure);
+		self::$data['path'] = $path_to_structure;
+		if (!self::getLayoutPath())
+			throw new Exception('missed layout header in structure file ' . $path_to_structure);
 	}
 
 	private static function parse($path) {
 		$path = trim($path);
 		$libmodules = array();
 		if (file_exists($path))
-			$structure = simpleXMLToArray(simplexml_load_file($path));
+			convertXmlObjToArr(simplexml_load_file($path), $structure);
 		else
 			throw new Exception('[' . $path . '] cant be loaded');
-		
-		foreach ($structure['data'] as $f => $v) {
-			if ($f == 'stylesheet') {
-				if (!isset($v['path'])) {
-					foreach ($v as $stylesheet) {
-						self::$data['stylesheet'][] = $stylesheet;
-					}
-				}else
-					self::$data['stylesheet'][] = $v;
-			}else
-				self::$data[$f] = $v;
+
+		$i = 0;
+		foreach ($structure[0]['@children'] as $children) {
+			if (in_array($children['@name'], array('stylesheet', 'javascript'))) {
+				self::$data[$children['@name']][] = $children['@attributes'];
+			} else if (in_array($children['@name'], array('layout'))) {
+				self::$data[$children['@name']]['file'] = $children['@attributes']['file'];
+			} else if (in_array($children['@name'], array('role'))) {
+				self::$data[$children['@name']]['need'] = $children['@attributes']['need'];
+			}
+			else
+				self::$data[$children['@name']] = $children['@text'];
 		}
 
-		if (isset($structure['data']['role']['need']))
-			Error::CheckThrowAuth($data['data']['role']['need']);
+		if (isset(self::$data['role']['need']))
+			Error::CheckThrowAuth(self::$data['role']['need']);
 		// вынимаем модули
 		$i = 0;
-		foreach ($structure['blocks'] as $container => &$data) {
-			if (isset($data['module']['name'])) {
-				$data['module'] = array($data['module']);
-			}
-			foreach ($data as $modules) {
-				foreach ($modules as $module) {
-					$i++;
-					$libmodules[$i] = $module;
-					$libmodules[$i]['container'] = $container;
-					unset($libmodules[$i]['param']);
-					if (isset($module['param']))
-						$libmodules[$i]['params'] = isset($module['param']['name']) ? array($module['param']) : $module['param'];
-				}
+		$j = 0;
+		foreach ($structure[1]['@children'] as $data) {
+			$container = $data['@name'];
+			foreach ($data['@children'] as $module) {
+				$i++;
+				$libmodules[$i] = $module['@attributes'];
+				$libmodules[$i]['container'] = $container;
+				if (isset($module['@children']))
+					foreach ($module['@children'] as $param)
+						if ($param['@name'] == 'param') {
+							$libmodules[$i]['params'][$j++] = $param['@attributes'];
+						}
 			}
 		}
 		foreach ($libmodules as $module)
@@ -85,7 +86,7 @@ class StructureParser {
 					$Node->appendChild($Text);
 					$data->appendChild($Node);
 					break;
-				case 'stylesheet':
+				case 'stylesheet':case 'javascript':
 					foreach ($value as $item) {
 						$Node = XMLClass::$xml->createElement($field);
 						foreach ($item as $f => $v)
@@ -95,8 +96,11 @@ class StructureParser {
 					break;
 				default:
 					$Node = XMLClass::$xml->createElement($field);
-					foreach ($value as $f => $v)
-						$Node->setAttribute($f, $v);
+					if (is_array($value)) {
+						foreach ($value as $f => $v)
+							$Node->setAttribute($f, $v);
+					}else
+						$Node->setAttribute('value', $value);
 					$data->appendChild($Node);
 					break;
 			}
@@ -129,9 +133,9 @@ class StructureParser {
 	public static function getModules() {
 		return self::$modules;
 	}
-	
+
 	public static function getTitle() {
-		return isset(self::$data['title'])?self::$data['title']:'';
+		return isset(self::$data['title']) ? self::$data['title'] : '';
 	}
 
 }

@@ -78,7 +78,7 @@ class Request {
 		$i = self::$real_path;
 		while ($i-- > 1)
 			array_pop($uri);
-		return implode('/', $uri);
+		return ($real = implode('/', $uri).'/') ? $real : Config::need('www_path');
 	}
 
 	/** по маске проверяем параметры для модуля
