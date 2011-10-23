@@ -1,0 +1,9 @@
+.p-message-list {margin-bottom:.7em; overflow:hidden; padding:.3em}
+.p-message-list.new {background:#d7F4FF}
+.p-message-list-image {float:left; margin-right:10px}
+.p-message-list-image img {max-width:50px; max-height:50px}
+.p-message-list-text {overflow:hidden}
+.p-message-list-text-time {float:right; font-size:85%; color:#777; margin-left:.5em}
+.p-message-list-text-delete {font-size:85%; color:#777; float:right}
+.p-message-list-text-user {float:left; margin-right:.5em}
+.p-message-list-text-subject {font-weight:bold}

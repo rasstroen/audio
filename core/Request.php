@@ -64,11 +64,11 @@ class Request {
 		self::parse_parameters($path_array);
 		if (isset($_POST))
 			foreach ($_POST as $f => $v) {
-                        if(!is_array($v))
-				self::$post[$f] = stripslashes($v);
-			else
-                                self::$post[$f] = $v;
-                        }
+				if (!is_array($v))
+					self::$post[$f] = stripslashes($v);
+				else
+					self::$post[$f] = $v;
+			}
 		unset($_POST);
 		unset($_GET);
 	}

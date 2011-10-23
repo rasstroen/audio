@@ -1,0 +1,42 @@
+.p-book-edit-genre,
+.p-book-edit-relation,
+.p-book-edit-serie,
+.p-book-edit-author {width:300px; border-bottom:1px solid #f0f0f0; padding:5px 0}
+.p-book-edit-author-role, 
+.p-book-edit-relation-title, 
+.p-book-edit-relation-type, 
+.p-book-edit-genre-title, 
+.p-book-edit-author-name {display:inline}
+.p-book-edit-relation-title {margin-left:.3em}
+.p-book-edit-author-name {margin-left:.3em}
+.p-book-edit-author-delete,
+.p-book-edit-relation-delete,
+.p-book-edit-serie-delete,
+.p-book-edit-genre-delete {float:right; font-size:80%; margin-top:2px}
+
+.p-book-list {float:left; width:119px; padding:0 5px 1em 0}
+.p-book-list-image img {height:50px}
+.p-book-list-info-title {height:2.45em; overflow:hidden}
+.p-book-list-info-author {height:1.22em; overflow:hidden}
+.p-book-list-info-author a {color:black; font-size:85%}
+.p-book-list-link {clear:both}
+.p-book-list-del {float:right; margin:0 10px}
+
+.p-book-list-shelves {overflow:hidden}
+.p-book-list-shelves-image {float:left; margin-right:10px}
+.p-book-list-shelves-image img {height:100px}
+.p-book-list-shelves-info {overflow:hidden}
+
+.p-book-show-image {float:left; margin-left:10px; width:200px}
+.p-book-show-info {overflow:hidden}
+.p-book-show-info-files,
+.p-book-show-info-series,
+.p-book-show-info-genres {margin:.5em 0}
+.p-book-show-info-shelf,
+.p-book-show-info-loved {margin-bottom:1em}
+.p-book-show-info-loved p {display:inline; margin-right:.3em}
+
+.p-book-event {background:#f0f0f0; padding:4px; overflow:hidden; margin:.5em 0}
+.p-book-event-image {float:left; margin-right:1em}
+.p-book-event-image img {max-height:50px}
+.p-book-event-author a {color:black; font-size:85%}

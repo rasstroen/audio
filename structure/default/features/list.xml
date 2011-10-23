@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<structure>
+	<data>
+		<title>Список тестов</title>
+    <stylesheet path="partials/feature"/>
+		<role need="50"/>
+	</data>
+	<blocks>
+		<content><module name="features" action="list" /></content>
+	</blocks>
+</structure>

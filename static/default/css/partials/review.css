@@ -1,0 +1,17 @@
+.p-review-list {overflow:hidden; margin-bottom:1em}
+.p-review-list-image {float:left; margin-right:1em; width:70px}
+.p-review-list-image img {max-width:70px}
+.p-review-list-text-time {float:right; margin-left:10px; font-size:85%}
+
+.p-review-user {overflow:hidden; margin-bottom:1em}
+.p-review-user-book-image {float:left; margin-right:10px; width:70px}
+.p-review-user-book-image img {max-height:70px}
+.p-review-user-text {clear:both; margin-left:80px; margin-top:.5em}
+
+.p-review-rate {overflow:hidden}
+.p-review-rate-image {float:left; margin-right:10px}
+.p-review-rate-image img {max-width:25px; max-height:25px}
+.p-review-rate-text-time {float:right; margin-left:10px; font-size:85%; line-height:25px}
+.p-review-rate-text-title {line-height:25px}
+
+.p-review-new {clear:both}

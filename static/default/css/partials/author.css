@@ -1,0 +1,11 @@
+.p-author-edit-relation {width:300px; border-bottom:1px solid #f0f0f0; padding:5px 0}
+.p-author-edit-relation-type {display:inline;margin-left:.3em}
+.p-author-edit-relation-title {display:inline; margin-left:.3em}
+.p-author-edit-relation-delete {float:right; font-size:80%; margin-top:2px}
+.p-author-list {float:left; width:100px; padding-right:10px; overflow:hidden; margin-bottom:1em}
+.p-author-list img {height:50px}
+.p-author-list-name {height:2.44em}
+.p-author-show-image {float:left; margin-right:20px}
+.p-author-show-text {overflow:hidden}
+.p-author-show-info-loved {margin-bottom:1em}
+.p-author-show-info-loved p {display:inline; margin-right:.3em}

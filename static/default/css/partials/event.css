@@ -1,0 +1,24 @@
+.p-event-list {margin:1em 0; overflow:hidden}
+.p-event-list-image {float:left; margin-right:1em}
+.p-event-list-image img {max-width:60px}
+.p-event-list-text {overflow:hidden}
+.p-event-list-text-date {float:right; color:#777}
+.p-event-list-text-review {margin-top:.3em}
+.p-event-list-text-title {display:inline}
+
+.p-event-list-likes {float:right; margin-bottom:.5em; clear:right}
+.p-event-list-likes div {display:inline; margin-right:.5em}
+
+
+.p-event-list-author {background:#f0f0f0; padding:4px; overflow:hidden; margin:.5em 0}
+.p-event-list-author-image {float:left; margin-right:1em}
+.p-event-list-author-image img {max-height:50px}
+
+.p-event-list-comments-new,
+.p-event-list-comments {border-top:1px solid #d0d0d0; margin-top:1em; padding-top:1em; clear:both; overflow:hidden}
+.p-event-list-comment-item {margin-top:.5em; overflow:hidden}
+.p-event-list-comment-item-text-time {float:right; font-size:85%; color:#777}
+.p-event-list-comment-item-image {float:left; width:20px; margin-right:10px}
+.p-event-list-comment-item-image img {max-height:20px}
+.p-event-list-comments-add {clear:left}
+.p-event-list-comment-item-answers {padding-left:30px}

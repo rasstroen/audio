@@ -1,0 +1,10 @@
+.p-user-list {float:left; width:100px; padding-right:10px; margin-bottom:.8em}
+.p-user-list img {height:50px}
+.p-user-show-image {float:left; margin-right:20px}
+.p-user-show-text {overflow:hidden}
+.p-user-show-text b {margin-left:.3em}
+.p-user-show-text p {margin-bottom:.3em}
+
+.p-user-auth-image {float:left; margin-right:5px}
+.p-user-auth-image img {max-width:15px; max-height:15px}
+.p-user-auth input {display:block; margin-bottom:.2em}

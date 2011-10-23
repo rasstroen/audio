@@ -43,30 +43,29 @@
     <xsl:param name="amount" select="30"/>
     <xsl:param name="authors" select="genre/authors"/>
     <input type="hidden" name="id" value="{genre/@id}" />
-    <h2 class="genres-show-title"><xsl:value-of select="genre/@title"/></h2>
-    <div class="genres-show-count">
+    <h2 class="p-genre-show-title"><xsl:value-of select="genre/@title"/></h2>
+    <div class="p-genre-show-count">
       <xsl:call-template name="helpers-this-amount">
         <xsl:with-param select="genre/@books_count" name="amount"></xsl:with-param>
         <xsl:with-param select="'книга книги книг'" name="words"></xsl:with-param>
       </xsl:call-template>
     </div>
-    <div class="genres-show-info-loved">
+    <div class="p-genre-show-info-loved">
       <p/>
       <a href="#" class="add-loved-genre">Добавить жанр в любимые</a>
     </div>
-    <div class="genres-show-description">
+    <div class="p-genre-show-description">
       <xsl:value-of select="genre/@description" disable-output-escaping="yes"/>
     </div>
-    <div class="genres-show-edit">
+    <div class="p-genre-show-edit">
       <a href="{genre/@path_edit}">Редактировать описание жанра</a>
     </div>
-    <ul class="genres-show-books-list">
+    <ul class="p-genre-show-books-list">
       <xsl:apply-templates select="genre/books/item[not (position()>$amount)]" mode="p-book-list">
-        <xsl:with-param select="'genres-show'" name="prefix"/>
         <xsl:with-param select="$authors" name="authors"/>
       </xsl:apply-templates>
     </ul>
-    <ul class="genres-list-item-subgenres">
+    <ul class="p-genre-show-subgenres">
       <xsl:apply-templates select="genre/subgenre" mode="p-genre-subgenre"/>
     </ul>
   </xsl:template>

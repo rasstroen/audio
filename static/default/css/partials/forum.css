@@ -1,0 +1,8 @@
+.p-forum-list-table {width:100%}
+.p-forum-list-table td {padding:4px 5px}
+.p-forum-list-table .odd {background:#f0f0f0}
+.p-forum-list-comment {color:#777; font-size:85%}
+.p-forum-show-comment-item {margin-bottom:1em; overflow:hidden}
+.p-forum-show-comment-item-image {float:left; margin-right:10px; width:50px}
+.p-forum-show-comment-item-image img {max-width:50px}
+.p-forum-show-comment-item-text {overflow:hidden}

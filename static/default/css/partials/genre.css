@@ -1,0 +1,13 @@
+.p-genre-list {clear:both; margin-bottom:1.5em; overflow:hidden}
+.p-genre-list h2 {margin-bottom:.1em}
+.p-genre-list-count {font-size:90%; color:#777}
+
+.p-genre-subgenre-list-subgenres {margin:.5em 0 1em; overflow:hidden}
+
+.p-genre-subgenre {float:left; line-height:2em; margin-right:1em}
+.p-genre-subgenre a {color:black}
+.p-genre-subgenre em {color:#777; font-size:80%}
+
+.p-genre-list-loved-item {margin-bottom:.3em}
+.p-genre-show-info-loved {margin-bottom:1em}
+.p-genre-show-info-loved p {display:inline; margin-right:.3em}

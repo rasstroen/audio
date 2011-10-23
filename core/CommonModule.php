@@ -57,7 +57,7 @@ class CommonModule extends BaseModule {
 	// выводим объект
 	function _show($id) {
 		$object = $this->Collection->getByIdLoaded($id);
-		if(!$object->exists){
+		if (!$object->exists) {
 			throw new Exception('К сожалению, такого у нас в базе совсем нет');
 		}
 		$this->data[$this->Collection->itemName] = $object->_show();
@@ -92,9 +92,9 @@ class CommonModule extends BaseModule {
 				$sorting_order = $cond->getSortingOrderSQL();
 			}
 			$per_page = isset($this->params['per_page']) ? $this->params['per_page'] : 0;
-			$pagingName= isset($this->params['paging_parameter_name']) ? $this->params['paging_parameter_name'] : 'p';
+			$pagingName = isset($this->params['paging_parameter_name']) ? $this->params['paging_parameter_name'] : 'p';
 			if ($per_page) {
-				$cond->setPaging($this->getCountBySQL($where), $per_page , $pagingName);
+				$cond->setPaging($this->getCountBySQL($where), $per_page, $pagingName);
 				$limit = $cond->getLimit();
 			}
 		}
@@ -107,6 +107,7 @@ class CommonModule extends BaseModule {
 		$this->data['conditions'] = $cond->getConditions();
 		return true;
 	}
+
 	/**
 	 * возвращает массив listData() объектов
 	 * @param type $ids

@@ -8,8 +8,7 @@
     <xsl:param name="prefix"/>
     <xsl:param name="authors" select="authors"/>
     <xsl:param name="owner_id"/>
-    <xsl:variable name="author_id" select="@author_id"/>
-    <xsl:variable name="author" select="$authors/item[@id=$author_id]"/>
+    <xsl:variable name="author" select="$authors/item[@id=current()/@author_id]"/>
     <xsl:variable name="fprefix">
       <xsl:choose>
         <xsl:when test="$prefix">-<xsl:value-of select="$prefix"/></xsl:when>
@@ -27,7 +26,7 @@
         <xsl:apply-templates select="." mode="helpers-book-cover"/>
       </div>
       <div class="{$fprefix}p-book-list{$fprefix}-info">
-        <div class="{$fprefix}p-book-list-item-info-title">
+        <div class="{$fprefix}p-book-list-info-title">
           <xsl:apply-templates select="." mode="helpers-book-link"/>
         </div>
         <xsl:if test="not($mode='author')">

@@ -18,7 +18,6 @@ class User {
 	public $shelf;
 	public $loaded = false;
 	//users_additional
-	public $profileAdditional = array(); // mongodb stored
 	public $changedAdditional = array(); // mongodb stored
 	public $loadedAdditional; // if mongodb document fetched
 	//
@@ -216,7 +215,7 @@ class User {
 		if ($this->loadedAdditional)
 			return true;
 		$this->loadedAdditional = true;
-		$this->profileAdditional = MongoDatabase::getUserAttributes($this->id);
+		$this->profileAdditional = array();
 		return;
 	}
 
@@ -233,7 +232,6 @@ class User {
 					foreach ($this->profile as $field => $value) {
 						$this->setXMLAttibute($field, $value);
 					}
-					$this->profileAdditional = $cachedUser->profileAdditional;
 					$this->loaded = true;
 					return;
 				} else {
@@ -325,10 +323,6 @@ class User {
 	}
 
 	function save() {
-		// дополнительные поля
-		if (count($this->changedAdditional) && $this->id) {
-			MongoDatabase::setUserAttributes($this->id, $this->changedAdditional);
-		}
 		// основные поля
 		if (count($this->changed) && $this->id) {
 			$this->changed['lastSave'] = time();

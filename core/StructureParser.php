@@ -16,6 +16,8 @@ class StructureParser {
 		self::$data['path'] = $path_to_structure;
 		if (!self::getLayoutPath())
 			throw new Exception('missed layout header in structure file ' . $path_to_structure);
+		if (isset(self::$data['role']['need']))
+			Error::CheckThrowAuth(self::$data['role']['need']);
 	}
 
 	private static function parse($path) {
@@ -38,9 +40,6 @@ class StructureParser {
 			else
 				self::$data[$children['@name']] = $children['@text'];
 		}
-
-		if (isset(self::$data['role']['need']))
-			Error::CheckThrowAuth(self::$data['role']['need']);
 		// вынимаем модули
 		$i = 0;
 		$j = 0;

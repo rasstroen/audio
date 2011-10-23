@@ -7,15 +7,18 @@
 	<xsl:include href="../layout.xsl" />
 	<xsl:include href="../module.xsl"/>
 	<xsl:include href="../helpers.xsl" />
-	<xsl:template match="module[@error and @action='show']">
+
+	<xsl:template match="module[@error and @action='show']" mode="p-module">
 		<h1>
-			<xsl:text>Ошибка</xsl:text>
+			<xsl:text>Ашыбка </xsl:text>
 			<xsl:if test="@error_code != 0 ">
 				<xsl:value-of select="@error_code"/>
 			</xsl:if>
 		</h1>
 		<div class="form-error">
-			<xsl:value-of select="@error"/>
+			<pre>
+				<xsl:value-of select="@error"/>
+			</pre>
 			<xsl:if test="@return_path != ''">
 				<p>
 					<a href="{@return_path}">Вернуться и попробовать что-нибудь ещё</a>
@@ -24,7 +27,9 @@
 		</div>
 		<xsl:if test="@error_description != ''">
 			<div class="form-error">
-				<xsl:value-of select="@error_description" disable-output-escaping="yes"/>
+				<pre>
+					<xsl:value-of select="@error_description" disable-output-escaping="yes"/>
+				</pre>
 			</div>
 		</xsl:if>
 	</xsl:template>

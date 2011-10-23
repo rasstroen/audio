@@ -3,6 +3,7 @@
 	<data>
 		<layout file="layouts/error.xsl"/>
 		<title>Ошибка 502!</title>
+		<role need="0"/>
 	</data>
 	<blocks>
 		<content>

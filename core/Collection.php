@@ -7,10 +7,11 @@ class Collection {
 	public $itemName = 'some_object';
 	public $itemsName = 'some_objects';
 	public static $books_instance = false;
+	public static $features_instance = false;
 	public static $persons_instance = false;
 	public $items = array();
 	public $from_cache = array();
-	public $cache_time = 60;
+	public $cache_time = 5;
 
 	protected static function getInstance() {
 		throw new Exception('Collection::getInstance must be overriden');
@@ -51,6 +52,7 @@ class Collection {
 
 	public function dropCache($id) {
 		Cache::drop($this->itemName . '_' . $id);
+		unset($this->items[$id]);
 	}
 
 	public static function add($classExem) {

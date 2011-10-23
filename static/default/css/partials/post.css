@@ -1,0 +1,17 @@
+.p-comment-list-image,
+.p-post-show-image {float:left; width:80px; margin-right:10px}
+.p-post-show-image img {max-width:70px; max-height:70px}
+.p-comment-list-text,
+.p-post-show-text {overflow:hidden}
+.p-answer-list abbr,
+.p-comment-list-text-time,
+.p-post-show-text-time {float:right; font-size:85%; color:#777}
+.p-post-show-text-body {margin-top:.5em}
+.p-posts-show-text-comment-list {border-top:1px solid #d0d0d0; margin-top:1em; padding-top:1em}
+
+.p-comment-list {overflow:hidden; margin-top:.3em}
+.p-comment-list-image img {max-width:50px; max-height:50px}
+
+.p-answer-list {background:#f0f0f0; margin-top:.3em; padding:3px 5px}
+.p-answer-list img {max-width:20px; max-height:20px; margin-right:5px}
+.p-answer-list-body {display:inline}

@@ -1,0 +1,20 @@
+.p-serie-list {overflow:hidden; margin-bottom:1.5em}
+.p-serie-list-title a {font-weight:bold}
+.p-serie-list-book-count {font-size:70%; color:#777}
+.p-serie-list-books {overflow:hidden; margin-bottom:.5em}
+
+.p-serie-list-loved-item {margin-bottom:.3em}
+.p-serie-show-count {color:#777; margin-bottom:.5em}
+.p-serie-show-children {margin-bottom:1em}
+.p-serie-show-description {margin-bottom:.5em}
+.p-serie-show-info-loved {margin-bottom:1em}
+.p-serie-show-info-loved p {display:inline; margin-right:.3em}
+
+.p-serie-show-books {overflow:hidden; margin-top:2em}
+.p-series-show-book-list {float:left; width:115px; margin:0 5px 1em 0; overflow:hidden}
+.p-series-show-book-list-image img {max-height:50px}
+.p-series-show-book-list-info-title {height:2.4em; overflow:hidden}
+.p-series-show-book-list-info-author {height:1.2em; overflow:hidden}
+.p-series-show-book-list-info-author a {color:black; font-size:80%}
+
+.p-serie-show-parrent {margin-bottom:.8em}

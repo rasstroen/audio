@@ -11,19 +11,8 @@
 	<xsl:include href="../layout.xsl" />
 	<xsl:include href="../module.xsl"/>
 	<xsl:include href="../helpers.xsl" />
+	<xsl:include href="../partials/user.xsl"/>
+	<xsl:include href="../partials/feature.xsl"/>
 
-  <xsl:include href="../partials/author.xsl"/>
-  <xsl:include href="../partials/book.xsl"/>
-  <xsl:include href="../partials/comment.xsl"/>
-  <xsl:include href="../partials/event.xsl"/>
-  <xsl:include href="../partials/forum.xsl"/>
-  <xsl:include href="../partials/genre.xsl"/>
-  <xsl:include href="../partials/log.xsl"/>
-  <xsl:include href="../partials/magazine.xsl"/>
-  <xsl:include href="../partials/message.xsl"/>
-  <xsl:include href="../partials/review.xsl"/>
-  <xsl:include href="../partials/serie.xsl"/>
-  <xsl:include href="../partials/user.xsl"/>
-
-  <xsl:include href="../partials/misc.xsl"/>
+	<xsl:include href="../partials/misc.xsl"/>
 </xsl:stylesheet>

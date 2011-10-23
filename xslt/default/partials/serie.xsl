@@ -79,7 +79,6 @@
     </xsl:if>
     <ul class="p-serie-show-books">
       <xsl:apply-templates select="serie/books/item[not (position()>$amount)]" mode="p-book-list">
-        <xsl:with-param select="'series-show'" name="prefix"/>
         <xsl:with-param select="authors" name="authors"/>
       </xsl:apply-templates>
     </ul>

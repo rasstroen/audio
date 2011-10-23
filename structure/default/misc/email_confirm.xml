@@ -2,7 +2,7 @@
 <structure>
 	<data>
 		<layout file="layouts/page.xsl"/>
-    <title>Подтверждение ящика электронной почты</title>
+		<title>Подтверждение ящика электронной почты</title>
 	</data>
 	<blocks>
 		<content>

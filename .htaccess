@@ -1,0 +1,6 @@
+RewriteEngine on
+Options +FollowSymlinks
+
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-f
+
+RewriteRule ^(.*)$ index.php [L]

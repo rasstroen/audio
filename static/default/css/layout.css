@@ -8,7 +8,8 @@
 .l-header-nav ul li {float:left; list-style:none; margin-right:5px}
 
 .l-content {float:left; width:620px; padding-right:20px}
-.l-content .module {overflow:hidden; margin-bottom:2em}
+.l-sidebar .module,
+.l-content .module {overflow:hidden; margin-bottom:2em; clear:both}
 .l-sidebar {float:right; width:300px; padding:10px}
 
 .l-footer-nav ul li {float:left; list-style:none; margin-right:5px}
@@ -32,7 +33,6 @@ a {color:#06a}
   background: url('/static/default/img/logo.png') no-repeat scroll 0 0 transparent;
   float:left; height:58px; overflow:hidden; text-indent:9999px; width:340px;
 }
-.l-content .module form {margin-bottom:1em}
 .l-content .module .form-group {margin-bottom:1em}
 .l-content .module .form-field {margin-bottom:.5em; overflow:hidden}
 .l-content .module .form-field label {float:left; width:150px; line-height:2em}
@@ -49,6 +49,7 @@ a {color:#06a}
 
 .l-sidebar-add-item {margin-bottom:.5em}
 
+.conditions-item {margin-bottom:1em}
 .conditions-item-title,
 .conditions-item-options-item {display:inline; margin-right:.3em}
 .conditions-item-options-item {padding:3px 0 2px}

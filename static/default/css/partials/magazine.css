@@ -1,0 +1,9 @@
+.p-magazine-list {margin-bottom:1em}
+.p-magazine-list h1 {margin-bottom:1em}
+.p-magazine-list h2 {margin-bottom:.2em}
+
+.p-magazine-info p {margin-bottom:.5em}
+.p-magazine-info,
+.p-magazine-year {margin-top:.5em; overflow:hidden}
+.p-magazine-year h3 {float:left; margin-right:1em}
+.p-magazine-year-books-item-empty {color:red}
